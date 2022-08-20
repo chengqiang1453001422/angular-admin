@@ -18,7 +18,7 @@ constructor(
 }
 
   getUrl(url: string): string {
-    return "http://81.69.176.53:8080/jeecg-boot" + url;
+    return "http://81.69.176.53:8089/jeecg-boot" + url;
   }
 
   /**
