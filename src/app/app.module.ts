@@ -37,6 +37,11 @@ import { DynamicComponentDirective } from './directive/dynamicComponent.directiv
 import { LoggerService } from 'src/provides/Logger.service';
 import { APP_CONFIG } from './config/app.config';
 import { MyComponentHhComponent } from './components/my-component-hh/my-component-hh.component';
+
+import { NgxEchartsModule } from 'ngx-echarts';
+
+import *  as echarts from 'echarts';
+
 registerLocaleData(zh);
 
 //import { FooModule } from 'example-component-library'
@@ -77,6 +82,9 @@ registerLocaleData(zh);
       BrowserAnimationsModule,
       ReactiveFormsModule,
      QuillModule.forRoot(),
+     NgxEchartsModule.forRoot({
+      echarts,
+    }),
       //FooModule
    ],
   providers: [
