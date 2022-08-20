@@ -1,0 +1,83 @@
+<div class="container">
+  <button nz-button nzType="primary">Primary Button</button>
+  <button nz-button nzType="default">Default Button</button>
+  <button nz-button nzType="dashed">Dashed Button</button>
+  <button nz-button nzType="text">Text Button</button>
+  <a nz-button nzType="link">Link Button</a>
+
+  <div [hidden]="submitted">
+    <h1>Hero Form</h1>
+    <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name" #name="ngModel">
+        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+          Name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="alterEgo">Alter Ego</label>
+        <input type="text" class="form-control" id="alterEgo" [(ngModel)]="model.alterEgo" name="alterEgo">
+      </div>
+
+      <div class="form-group">
+        <label for="power">Hero Power</label>
+        <select class="form-control" id="power" required [(ngModel)]="model.power" name="power" #power="ngModel">
+          <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
+        </select>
+        <div [hidden]="power.valid || power.pristine" class="alert alert-danger">
+          Power is required
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-success" [disabled]="!heroForm.form.valid">Submit</button>
+      <button type="button" class="btn btn-default" (click)="newHero(); heroForm.reset()">New Hero</button>
+    </form>
+  </div>
+
+  <div [hidden]="!submitted">
+    <h2>You submitted the following:</h2>
+    <div class="row">
+      <div class="col-xs-3">Name</div>
+      <div class="col-xs-9">{{ model.name }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Alter Ego</div>
+      <div class="col-xs-9">{{ model.alterEgo }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Power</div>
+      <div class="col-xs-9">{{ model.power }}</div>
+    </div>
+    <br>
+    <button type="button" class="btn btn-primary" (click)="submitted=false">Edit</button>
+  </div>
+  <p>
+    <code>
+      <!-- 以下router都为Router注入服务，activatedRoute都为ActivatedRoute注入的服务
+
+1为路由参数
+routing文件设置方式：{ path: 'hero/:id', component: HeroDetailComponent }
+页面设置：<a [routerLink]="['/hero',id]"></a>
+ts: this.router.navgate(['/hero',id]) 
+
+获取路由参数  这里的id是path里面设置的 :id
+this.activatedRouter.paramMap.subscribe(param => param.get("id"))
+this.activatedRoute.snapshot.paramMap.get("id");
+
+?后面是查询参数， #后面是片段
+routing文件不需要变动： { path: 'hero', component: HeroDetailComponent }
+// queryParams是查询参数，可以设置多个查询参数 fragment是片段
+页面设置：<a [routerLink]="['/hero']" [queryParams]="{name: '德玛',parice: '6300'}" [fragment]="'免费英雄'"></a>
+ts：this.router.navigate(['/heroes'], {
+      queryParams: {name: "德玛", price: "6300"}, //查询参数
+      fragment: "免费英雄"  // 片段
+    })
+获取查询参数和片段：
+this.activatedRouter.fragment.subscribe(value => console.log(value));
+this.activatedRouter.queryParamMap.subscribe(value=>console.log(value.get("name"),value.get("price"))); -->
+
+    </code>
+  </p>
+</div>

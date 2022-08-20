@@ -12,15 +12,38 @@ import zh from '@angular/common/locales/zh';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserComponent } from './user/user.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { FormComponent } from './form/form.component';
+import { AccountDialogComponent } from './components/accountDialog/accountDialog.component';
+import { TableComponent } from './table/table.component';
 
+import { Func } from '../provides/func.service';
+import { NotpageComponent } from './notpage/notpage.component';
+import { AdminComponent } from './admin/admin.component';
+import { AuthService } from 'src/servers/auth.service';
+import { httpInterceptorProviders } from './http-interceptors';
+import { HttpService } from 'src/servers/http.service';
+import { NewsArticleWriteComponent } from './newsArticleWrite/newsArticleWrite.component';
+import { DictService } from 'src/servers/dict.service';
+
+import { QuillModule } from 'ngx-quill'
 registerLocaleData(zh);
 
+//import { FooModule } from 'example-component-library'
+
 @NgModule({
-   declarations: [
+   declarations: [				
       AppComponent,
       LoginComponent,
       DashboardComponent,
-      UserComponent
+      UserComponent,
+      FeedbackComponent,
+      FormComponent,
+      AccountDialogComponent,
+      TableComponent,
+      NotpageComponent,
+      AdminComponent,
+      NewsArticleWriteComponent
    ],
    imports: [
       BrowserModule,
@@ -29,10 +52,16 @@ registerLocaleData(zh);
       FormsModule,
       HttpClientModule,
       BrowserAnimationsModule,
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      QuillModule.forRoot(),
+      //FooModule
    ],
    providers: [
-      
+      Func,
+      AuthService,
+      HttpService,
+      DictService,
+      httpInterceptorProviders
    ],
    bootstrap: [
       AppComponent

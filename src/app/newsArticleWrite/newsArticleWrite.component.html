@@ -1,0 +1,110 @@
+<input type="text" #input (input)="serach(getValue($event))">
+<button (click)="getitem()">999</button>
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="24">
+      <nz-form-item nzFlex>
+        <nz-form-label [nzSpan]="2" nzFor="title" nzRequired>稿件标题</nz-form-label>
+        <nz-form-control [nzSpan]="22">
+          <input nz-input formControlName="title" type="text" placeholder="请输入标题">
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="12">
+      <nz-form-item nzFlex>
+        <nz-form-label [nzSpan]="4" nzFor="level" nzRequired>重要程度</nz-form-label>
+        <nz-form-control [nzSpan]="20">
+          <nz-select style="width: 100%;" formControlName="level" nzPlaceHolder="请选择重要程度">
+            <nz-option *ngFor="let item of levelOptions" [nzValue]="item.value" [nzLabel]="item.text"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item nzFlex>
+        <nz-form-label [nzSpan]="4" nzFor="manuscriptType" nzRequired>稿件类型</nz-form-label>
+        <nz-form-control [nzSpan]="20">
+          <nz-select style="width: 100%;" formControlName="manuscriptType" nzPlaceHolder="请选择稿件类型">
+            <nz-option *ngFor="let item of manuscriptOptions" [nzValue]="item.value" [nzLabel]="item.text"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="12">
+      <nz-form-item nzFlex>
+        <nz-form-label [nzSpan]="4" nzFor="isPublic" nzRequired>是否公开</nz-form-label>
+        <nz-form-control [nzSpan]="20">
+          <nz-radio-group formControlName="isPublic">
+            <label *ngFor="let item of publicOptions" nz-radio [nzValue]="item.value">{{item.text}}</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item nzFlex>
+        <nz-form-label [nzSpan]="4" nzFor="happenAddress" nzRequired>发生地点</nz-form-label>
+        <nz-form-control [nzSpan]="20">
+          <input nz-input formControlName="happenAddress" type="text" placeholder="请输入发生地点">
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="12">
+      <nz-form-item nzFlex>
+        <nz-form-label [nzSpan]="4" nzFor="happenDate" nzRequired>发生时间</nz-form-label>
+        <nz-form-control [nzSpan]="20">
+          <nz-date-picker
+            style="width: 100%;"
+            nzShowTime
+            nzFormat="yyyy-MM-dd HH:mm:ss"
+            nzPlaceHolder="请选择发生时间"
+            (nzOnOk)="onOk($event)"
+            formControlName="happenDate"
+          ></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+    <div nz-col [nzSpan]="12">
+      <nz-form-item nzFlex>
+        <nz-form-label [nzSpan]="4" nzFor="keywords">关键词</nz-form-label>
+        <nz-form-control [nzSpan]="20">
+          <input nz-input formControlName="keywords" type="text" placeholder="请输入关键词">
+        </nz-form-control>
+      </nz-form-item >
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="24">
+      <nz-form-item nzFlex>
+        <nz-form-label [nzSpan]="2" nzFor="keywords">稿件正文</nz-form-label>
+        <div style="flex: 1;height: 400px;">
+          <quill-editor (onContentChanged)="onContentChanged($event)"></quill-editor>
+        </div>
+      </nz-form-item >
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24" style="margin-top: 48px;">
+    <div nz-col [nzSpan]="24">
+      <nz-form-item nzFlex>
+        <nz-form-label [nzSpan]="2" nzFor="keywords">附件素材</nz-form-label>
+        <nz-upload nzAction="https://jsonplaceholder.typicode.com/posts/">
+          <button nz-button style="height: 40px;"><i nz-icon nzType="upload"></i><span>选择文件</span></button>
+        </nz-upload>
+      </nz-form-item >
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="24">
+      <nz-form-item nzFlex style="justify-content: flex-end;margin-top: 30px;">
+        <button nz-button nzType="primary" (click)="save('0')">保存</button>
+        <button nz-button nzType="primary" (click)="save('1')" style="margin-left: 12px;">提交并保存</button>
+      </nz-form-item >
+    </div>
+  </div>
+  
+</form>

@@ -1,0 +1,92 @@
+{
+  "project": {
+    "name": "angular-admin",
+    "ejected": false 
+  },
+  "apps": [
+    {
+      "root": "src", 
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "favicon.ico"
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts", 
+      "testTsconfig": "tsconfig.spec.json",
+      "tsconfig":"tsconfig.app.json",
+      "prefix": "app",
+      "deployUrl": "//cdn.com.cn", 
+      "styles": [
+        "styles.css"
+      ],
+      "scripts": [
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json"
+    },
+    {
+      "project": "src/tsconfig.spec.json"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "scss",
+    "component": {
+      "spec": false,
+      "inlineStyle": false,
+      "inlineTemplate": false,
+      "flat": false,
+      "changeDetection": "Default",
+      "viewEncapsulation": "Emulated"
+    },
+    "class": {
+      "spec": false
+    },
+    "directive": {
+      "flat": true,
+      "spec": true
+    },
+    "guard": {
+      "flat": true,
+      "spec": true
+    },
+    "interface": {
+      "prefix": ""
+    },
+    "module": {
+      "flat": false,
+      "spec": false
+    },
+    "pipe": {
+      "flat": true,
+      "spec": false
+    },
+    "service": {
+      "flat": true,
+      "spec": false
+    }
+  }
+}
