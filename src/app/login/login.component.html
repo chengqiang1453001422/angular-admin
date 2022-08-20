@@ -1,0 +1,49 @@
+<div style="display: flex;align-items: center;justify-content: center;height: 100%;width: 100%;">
+ <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-group [nzPrefix]="prefixUser">
+            <input type="text" nz-input formControlName="username" placeholder="请输入帐户名" />
+          </nz-input-group>
+          <nz-form-explain *ngIf="validateForm.get('username')?.dirty && validateForm.get('username')?.errors"
+            >请输入用户名!</nz-form-explain
+          >
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-group [nzPrefix]="prefixLock">
+            <input type="password" nz-input formControlName="password" placeholder="请输入密码" />
+          </nz-input-group>
+          <nz-form-explain *ngIf="validateForm.get('password')?.dirty && validateForm.get('password')?.errors"
+            >请输入密码</nz-form-explain
+          >
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-group class="captcha-group">
+            <input type="password" nz-input formControlName="captcha" placeholder="请输入验证码" />
+            <img class="captcha" [src]="randCodeImage" alt="" (click)="handleChangeCheckCode()">
+          </nz-input-group>
+          <nz-form-explain *ngIf="validateForm.get('captcha')?.dirty && validateForm.get('captcha')?.errors"
+            >请输入验证码</nz-form-explain
+          >
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <label nz-checkbox formControlName="remember_me">
+            <span>记住密码</span>
+          </label>
+          <a class="login-form-forgot" class="login-form-forgot">忘记密码</a>
+          <button nz-button class="login-form-button" [nzType]="'primary'">登录</button>
+          <a href="">立即注册</a>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+    <ng-template #prefixUser><i nz-icon type="user"></i></ng-template>
+    <ng-template #prefixLock><i nz-icon type="lock"></i></ng-template>
+</div>
+    
+  

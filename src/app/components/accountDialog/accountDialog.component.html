@@ -1,0 +1,51 @@
+<div class="layout">
+	<div class="bumo-nav">
+		<div class="nav-pc">
+			<div class="main-content bumo-nav-cont clearfix">
+				<a href="">
+					<img class="logo" src="../../assets/images/logo.svg">
+				</a>
+				<ul class="nav-group">
+					<li class="nav-list active">
+						<a routerLink="/dashboard" routerLinkActive="active">首页</a>
+					</li>
+					<li class="nav-list">
+						<a routerLink="/login" routerLinkActive="active">技术优势</a>
+					</li>
+					<li class="nav-list">
+						<a routerLink="/form" routerLinkActive="active">开发者</a>
+					</li>
+					<li class="nav-list">
+						<a routerLink="/feedback" routerLinkActive="active">钱包</a>
+					</li>
+					<li class="nav-list">
+						<a routerLink="/login" routerLinkActive="active">竞选节点</a>
+					</li>
+					<li class="nav-list">
+						<a routerLink="/login" routerLinkActive="active">浏览器</a>
+					</li>
+					<li class="nav-list">
+						<a routerLink="/login" routerLinkActive="active">核心团队</a>
+					</li>
+					<li class="nav-list">
+						<a routerLink="/login" routerLinkActive="active">登录</a>
+					</li>
+					<li class="nav-list" (click)="GenerateKeyPage($event);"><a href="">点击事件</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="index-cont">
+		<div class="swiper-bg">
+			<div>
+				<div class="panel" #box>通过ViewChild获取dom元素</div>
+				<div style="padding:15px;" class="panel box">通过ElementRef获取dom元素</div>
+			</div>
+		</div>
+	</div>
+	<div class="item-box">
+		<div class="btn" (click)="jumpPage()">按钮一</div>
+		<div class="btn">按钮一</div>
+		<div class="btn">按钮一</div>
+	</div>
+</div>

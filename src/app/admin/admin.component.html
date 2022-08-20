@@ -1,0 +1,49 @@
+<nz-layout class="layout">
+	<nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+		<div class="logo"></div>
+		<ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+			<li nz-menu-item routerLink="/system" nz-tooltip nzPlacement="right" [nzTitle]="isCollapsed ? 'Navigation One' : ''">
+				<i nz-icon nzType="file"></i>
+				<span>首页</span>
+			</li>
+			<li nz-submenu>
+				<span title><i nz-icon type="user"></i><span>稿件箱</span></span>
+				<ul>
+					<li nz-menu-item routerLink="/system/newsArticleWrite">我要写稿</li>
+					<li nz-menu-item routerLink="/system/table">我的稿件</li>
+					<li nz-menu-item routerLink="/system/user">待发稿</li>
+					<li nz-menu-item routerLink="/system/feedback">回收站</li>
+				</ul>
+			</li>
+			<li nz-submenu>
+				<span title><i nz-icon type="team"></i><span>约稿</span></span>
+				<ul>
+					<li nz-menu-item routerLink="/system">我要约稿</li>
+					<li nz-menu-item routerLink="/system">我的约稿</li>
+					<li nz-menu-item routerLink="/system">预约稿件认领</li>
+					<li nz-menu-item routerLink="/system">认领记录</li>
+				</ul>
+			</li>
+		</ul>
+	</nz-sider>
+	<nz-layout>
+		<nz-header>
+			<i
+				class="trigger"
+				nz-icon
+				[nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+				(click)="isCollapsed = !isCollapsed"
+			></i>
+		</nz-header>
+		<nz-content>
+			<nz-breadcrumb>
+				<nz-breadcrumb-item>稿件箱</nz-breadcrumb-item>
+				<nz-breadcrumb-item>我的稿件</nz-breadcrumb-item>
+			</nz-breadcrumb>
+			<div class="inner-content">
+				<router-outlet></router-outlet>
+			</div>
+		</nz-content>
+		<nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
+	</nz-layout>
+</nz-layout>
