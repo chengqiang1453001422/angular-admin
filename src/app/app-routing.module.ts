@@ -1,3 +1,11 @@
+/*
+ * @Author: 成强 
+ * @Date: 2022-08-20 14:55:35
+ * @LastEditors: 成强 
+ * @LastEditTime: 2022-08-27 16:16:12
+ * @FilePath: /angular-admin/src/app/app-routing.module.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, Router } from '@angular/router';
 import { DashboardComponent }   from './dashboard/dashboard.component';
@@ -32,6 +40,7 @@ const routes: Routes = [
 		] 
 	},
 	{ path: 'login', component: LoginComponent },
+	{ path: 'user', component: UserComponent },
 	{ path: '**', component: NotpageComponent }
 ];
 

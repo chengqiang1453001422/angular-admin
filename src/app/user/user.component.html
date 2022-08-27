@@ -1,3 +1,56 @@
-<p>
-  user works!
-</p>
+<div class="content">
+  <ng-container *ngFor="let item of filterCondtionList; let i = index">
+    <div class="card-item">
+      <ng-container *ngFor="let subItem of item; let subI = index">
+        <div class="filter-item">
+          <nz-select [(ngModel)]="subItem.fieldValue" nzPlaceHolder="请选择" (ngModelChange)="onSelectChange(subItem, item)" style="width: 200px">
+            <ng-container *ngFor="let optionItem of subItem.optionsList">
+              <nz-option [nzValue]="optionItem.id" [nzLabel]="optionItem.name"></nz-option>
+            </ng-container>
+          </nz-select>
+          <div class="field-item">
+            <ng-container *ngFor="let fieldItem of subItem.fieldList">
+              <div class="field">
+                <ng-template [ngIf]="fieldItem.fieldType == 'select'">
+                  <nz-select [(ngModel)]="fieldItem.fieldValue" nzPlaceHolder="请选择" (ngModelChange)="onSelectChange(fieldItem, subItem.fieldList)" style="width: 200px">
+                    <ng-container *ngFor="let foptionItem of fieldItem.optionsList">
+                      <nz-option [nzValue]="foptionItem.id" [nzLabel]="foptionItem.name"></nz-option>
+                    </ng-container>
+                  </nz-select>
+                </ng-template>
+                <ng-template [ngIf]="fieldItem.fieldType == 'inputNumber'">
+                  <nz-input-number nzPlaceHolder="请输入" [(ngModel)]="fieldItem.fieldValue" [nzMin]="1" [nzMax]="1000" [nzStep]="1"></nz-input-number>
+                </ng-template>
+                <ng-template [ngIf]="fieldItem.fieldType == 'input'">
+                  <input nz-input placeholder="请输入" [(ngModel)]="fieldItem.fieldValue" />
+                </ng-template>
+                <ng-template [ngIf]="fieldItem.fieldType == 'date'">
+                  <nz-date-picker nzPlaceHolder="请选择" [ngModel]="fieldItem.fieldValue"></nz-date-picker>
+                </ng-template>
+                <ng-template [ngIf]="fieldItem.fieldType == 'dateRange'">
+                  <nz-range-picker nzPlaceHolder="请选择" [ngModel]="fieldItem.fieldValue"></nz-range-picker>
+                </ng-template>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div class="filter-btn">
+          <button nz-button (click)="addFilter('and', item)">
+            <i nz-icon nzType="plus-square" nzTheme="fill"></i>
+          </button>
+          <button nz-button (click)="deleteFilter('and', subI, item)">
+            <i nz-icon nzType="minus-square" nzTheme="fill"></i>
+          </button>
+        </div>
+      </ng-container>
+    </div>
+    <div class="card-btn">
+      <button nz-button (click)="addFilter('or')">
+        <i nz-icon nzType="plus-square" nzTheme="fill"></i>
+      </button>
+      <button nz-button (click)="deleteFilter('or', i)">
+        <i nz-icon nzType="minus-square" nzTheme="fill"></i>
+      </button>
+    </div>
+  </ng-container>
+</div>

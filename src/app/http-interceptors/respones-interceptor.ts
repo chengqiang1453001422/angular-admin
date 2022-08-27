@@ -2,7 +2,7 @@ import { HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angula
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { NzMessageService } from "ng-zorro-antd";
-import {tap,finalize} from 'rxjs/operators';
+import { tap, finalize } from 'rxjs/operators';
 
 @Injectable()
 export class ResponseInterceptor implements HttpInterceptor {
@@ -10,12 +10,12 @@ export class ResponseInterceptor implements HttpInterceptor {
   constructor(
     private message: NzMessageService,
     private router: Router
-  ) {}
+  ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     return next.handle(req).pipe(
       tap(event => {
-        if(event instanceof HttpResponse) {
+        if (event instanceof HttpResponse) {
           console.log("成功", event);
         }
       }, error => {
@@ -32,7 +32,7 @@ export class ResponseInterceptor implements HttpInterceptor {
   onError(response: any) {
     console.log("onError", response)
     const { status, message } = response.error;
-    switch(status) {
+    switch (status) {
       case 403:
         this.message.create("error", "拒绝访问");
         break;
@@ -50,7 +50,7 @@ export class ResponseInterceptor implements HttpInterceptor {
         this.message.create("error", "登录已过期");
         this.router.navigate(["/login"]);
         break;
-      default: 
+      default:
         this.message.create("error", message);
     }
   }

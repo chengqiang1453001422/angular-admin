@@ -1,0 +1,26 @@
+.content {
+  padding: 20px;
+  .card-item{
+    margin-top: 24px;
+    border: 1px solid #ddd;
+    padding: 12px;
+    .field-item{
+      display: flex;
+      align-items: center;
+      margin: 12px 0;
+      .field{
+        margin-right: 12px;
+      }
+    }
+    .filter-btn{
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+  }
+  .card-btn{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+  }
+}
