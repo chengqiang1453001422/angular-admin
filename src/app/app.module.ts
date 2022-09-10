@@ -61,7 +61,7 @@ registerLocaleData(zh);
     HighlightDirective,
     YustyleDirective,
     DynamicComponentDirective,
-    MyComponentHhComponent
+    MyComponentHhComponent,
   ],
   entryComponents: [
     SelectAccountComponent,

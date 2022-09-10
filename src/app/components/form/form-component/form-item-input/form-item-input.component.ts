@@ -9,6 +9,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class FormItemInputComponent implements OnInit {
 
   @Input() form!: FormGroup;
+  @Input() field!: any;
   constructor() { }
 
   ngOnInit() {
