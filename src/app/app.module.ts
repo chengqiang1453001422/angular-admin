@@ -27,6 +27,16 @@ import { NewsArticleWriteComponent } from './newsArticleWrite/newsArticleWrite.c
 import { DictService } from 'src/servers/dict.service';
 
 import { QuillModule } from 'ngx-quill'
+import { SelectAccountComponent } from './components/selectAccount/selectAccount.component';
+import { FormItemComponent } from './components/form/form-item/form-item.component';
+import { FormItemInputComponent } from './components/form/form-component/form-item-input/form-item-input.component';
+import { FormDynamicItemComponent } from './components/form/form-dynamic-item/form-dynamic-item.component';
+import { HighlightDirective } from './highlight.directive';
+import { YustyleDirective } from './directive/Yustyle.directive';
+import { DynamicComponentDirective } from './directive/dynamicComponent.directive';
+import { LoggerService } from 'src/provides/Logger.service';
+import { APP_CONFIG } from './config/app.config';
+import { MyComponentHhComponent } from './components/my-component-hh/my-component-hh.component';
 registerLocaleData(zh);
 
 //import { FooModule } from 'example-component-library'
@@ -43,8 +53,21 @@ registerLocaleData(zh);
       TableComponent,
       NotpageComponent,
       AdminComponent,
-      NewsArticleWriteComponent
-   ],
+    NewsArticleWriteComponent,
+    SelectAccountComponent,
+    FormItemComponent,
+    FormItemInputComponent,
+    FormDynamicItemComponent,
+    HighlightDirective,
+    YustyleDirective,
+    DynamicComponentDirective,
+    MyComponentHhComponent
+  ],
+  entryComponents: [
+    SelectAccountComponent,
+    FormItemComponent,
+    FormItemInputComponent
+  ],
    imports: [
       BrowserModule,
       AppRoutingModule,
@@ -53,10 +76,19 @@ registerLocaleData(zh);
       HttpClientModule,
       BrowserAnimationsModule,
       ReactiveFormsModule,
-      QuillModule.forRoot(),
+     QuillModule.forRoot(),
       //FooModule
    ],
-   providers: [
+  providers: [
+    {
+      provide: LoggerService, useValue: {
+       name: "chengqiang"
+      }
+    },
+    {
+      provide: APP_CONFIG, useValue: {
+      name: "成强"
+    } },
       Func,
       AuthService,
       HttpService,

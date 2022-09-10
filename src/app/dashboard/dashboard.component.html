@@ -1,46 +1,66 @@
 <div class="layout">
-	<div class="bumo-nav">
-		<div class="nav-pc">
-			<div class="main-content bumo-nav-cont clearfix">
-				<a href="">
-					<img class="logo" src="../../assets/images/logo.svg">
-				</a>
-				<ul class="nav-group">
-					<li class="nav-list active">
-						<a routerLink="/dashboard" routerLinkActive="active">首页</a>
-					</li>
-					<li class="nav-list">
-						<a routerLink="/login" routerLinkActive="active">技术优势</a>
-					</li>
-					<li class="nav-list">
-						<a routerLink="/login" routerLinkActive="active">开发者</a>
-					</li>
-					<li class="nav-list">
-						<a routerLink="/login" routerLinkActive="active">钱包</a>
-					</li>
-					<li class="nav-list">
-						<a routerLink="/login" routerLinkActive="active">竞选节点</a>
-					</li>
-					<li class="nav-list">
-						<a routerLink="/login" routerLinkActive="active">浏览器</a>
-					</li>
-					<li class="nav-list">
-						<a routerLink="/login" routerLinkActive="active">核心团队</a>
-					</li>
-					<li class="nav-list">
-						<a routerLink="/login" routerLinkActive="active">登录</a>
-					</li>
-					<li class="nav-list" (click)="GenerateKeyPage($event);"><a href="">点击事件</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<div class="index-cont">
-		<div class="swiper-bg">
-			<div>
-				<div class="panel" #box>通过ViewChild获取dom元素</div>
-				<div style="padding:15px;" class="panel box">通过ElementRef获取dom元素</div>
-			</div>
-		</div>
-	</div>
+  <div app-navagation [name]="name">
+    <!-- <app-my-component-hh [name]="name"></app-my-component-hh> -->
+  </div>
+  <div>父组件：{{ name }}</div>
+  <button nz-button (click)="onChangeName()">父组件改变name</button>
+  <div class="bumo-nav" [hidden]="true">
+    <div class="nav-pc">
+      <div class="main-content bumo-nav-cont clearfix">
+        <a href="">
+          <img class="logo" src="../../assets/images/logo.svg" />
+        </a>
+        <ul class="nav-group">
+          <li class="nav-list active">
+            <a routerLink="/dashboard" routerLinkActive="active">首页</a>
+          </li>
+          <li class="nav-list">
+            <a routerLink="/login" routerLinkActive="active">技术优势</a>
+          </li>
+          <li class="nav-list">
+            <a routerLink="/login" routerLinkActive="active">开发者</a>
+          </li>
+          <li class="nav-list">
+            <a routerLink="/login" routerLinkActive="active">钱包</a>
+          </li>
+          <li class="nav-list">
+            <a routerLink="/login" routerLinkActive="active">竞选节点</a>
+          </li>
+          <li class="nav-list">
+            <a routerLink="/login" routerLinkActive="active">浏览器</a>
+          </li>
+          <li class="nav-list">
+            <a routerLink="/login" routerLinkActive="active">核心团队</a>
+          </li>
+          <li class="nav-list">
+            <a routerLink="/login" routerLinkActive="active">登录</a>
+          </li>
+          <li class="nav-list" (click)="GenerateKeyPage($event)"><a href="">点击事件</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="index-cont">
+    <div class="swiper-bg">
+      <div>
+        <div class="panel" #box>通过ViewChild获取dom元素</div>
+        <div style="padding: 15px" class="panel box">通过ElementRef获取dom元素</div>
+        <app-selectAccount #com></app-selectAccount>
+        <ng-template #mydiv>
+          <div>动态组件数据</div>
+        </ng-template>
+        <nz-card style="width: 300px" nzTitle="Card title" [nzExtra]="extraTemplate">
+          <div>我是卡片</div>
+          <ng-template #card></ng-template>
+        </nz-card>
+        <ng-template #extraTemplate>
+          <a>更多</a>
+        </ng-template>
+        <div (click)="clearDiv()">清空容器</div>
+        <div (click)="addDiv()">增加容器</div>
+      </div>
+    </div>
+  </div>
+  <app-form-item [formList]="formList" (formSubmit)="formSubmit($event)"></app-form-item>
+  <p [appYustyle]="color">改变颜色呀</p>
 </div>

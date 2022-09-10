@@ -24,11 +24,11 @@ const routes: Routes = [
 	{ 
 		path: 'system', 
 		component: AdminComponent, 
-		canActivate: [AuthGuard],
+		//canActivate: [AuthGuard],
 		children: [
 			{
 				path: '',
-				canActivateChild: [AuthGuard],
+				//canActivateChild: [AuthGuard],
 				children: [
 					{ path: '', component: DashboardComponent },
 					{ path: 'newsArticleWrite', component: NewsArticleWriteComponent },

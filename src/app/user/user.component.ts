@@ -1,13 +1,6 @@
-/*
- * @Author: 成强 
- * @Date: 2019-07-01 17:11:32
- * @LastEditors: 成强 
- * @LastEditTime: 2022-08-27 23:52:24
- * @FilePath: /angular-admin/src/app/user/user.component.ts
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
 import { Component, OnInit } from '@angular/core';
-import { FilterItem } from 'src/mode/product';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { FilterItem, SaveFilter } from 'src/mode/product';
 
 @Component({
   selector: 'app-user',
@@ -15,8 +8,12 @@ import { FilterItem } from 'src/mode/product';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
+  isVisibleMiddle: boolean = false;
 
-  constructor() { }
+  constructor(
+    private message: NzMessageService,
+    private modalService: NzModalService
+  ) { }
 
   ngOnInit() {
     //this.initFilterList(this.saveData);
@@ -24,11 +21,12 @@ export class UserComponent implements OnInit {
     console.log("生成的数据", this.filterCondtionList)
 
     console.log("filterList", this.filterList)
+
   }
 
   filterData = [
     {
-      id: "user_braver",
+      id: "user_behavior",
       name: "用户行为",
       permiss: [
         {
@@ -36,7 +34,7 @@ export class UserComponent implements OnInit {
           name: "购买商品数量",
           valueType: "number",
           extra: true,
-          opreat: [">=", "=", "<"],
+          operator: [">=", "=", "<"],
           opreatList: [
             { id: ">=", name: "大于等于"},
             { id: "=", name: "等于"},
@@ -48,9 +46,8 @@ export class UserComponent implements OnInit {
           name: "浏览数量",
           valueType: "number",
           extra: true,
-          opreat: [">=", "=", "<"],
+          operator: [">=", "=", "<"],
           opreatList: [
-            { id: ">=", name: "大于等于"},
             { id: "=", name: "等于"},
             { id: "<", name: "小于"}
           ]
@@ -58,18 +55,35 @@ export class UserComponent implements OnInit {
       ]
     },
     {
-      id: "user_attrbiue",
+      id: "user_property",
       name: "用户属性",
       permiss: [
         {
           id: "coutry",
           name: "国家",
           valueType: "number",
-          extra: true,
-          opreat: [">=", "=", "<"],
+          extra: false,
+          operator: [">=", "=", "<"],
           opreatList: [
             { id: "in", name: "在"},
             { id: "!in", name: "不在"},
+          ]
+        },
+      ]
+    },
+    {
+      id: "segment",
+      name: "用户名单",
+      permiss: [
+        {
+          id: "lessing",
+          name: "名单列表",
+          valueType: "select",
+          extra: false,
+          operator: [">=", "=", "<"],
+          opreatList: [
+            { id: "in", name: "包含"},
+            { id: "!in", name: "不包含"},
           ]
         },
       ]
@@ -95,8 +109,8 @@ export class UserComponent implements OnInit {
   filterList = [
     [
       {
-        fieldName: "auditer",
-        fieldValue: "user_braver",
+        fieldName: "audienceFilter",
+        fieldValue: "user_behavior",
         fieldType: "select",
         fieldValueType: "",
         optionsList: this.filterData,
@@ -109,7 +123,7 @@ export class UserComponent implements OnInit {
             optionsList: this.filterData[0].permiss,
           },
           {
-            fieldName: "opreat",
+            fieldName: "operator",
             fieldValue: ">=",
             fieldType: "select",
             fieldValueType: "",
@@ -132,8 +146,8 @@ export class UserComponent implements OnInit {
         ]
       },
       {
-        fieldName: "auditer",
-        fieldValue: "user_attrbiue",
+        fieldName: "audienceFilter",
+        fieldValue: "user_property",
         fieldType: "select",
         fieldValueType: "",
         optionsList: this.filterData,
@@ -153,18 +167,18 @@ export class UserComponent implements OnInit {
   saveData = [
     [
       {
-        auditer: "user_braver",
+        audienceFilter: "user_behavior",
         code: "car_to_buy",
-        opreat: ">=",
+        operator: ">=",
         value: "78",
         timerFrame: {
           type: "this_mounth",
         }
       },
       {
-        auditer: "user_braver",
+        audienceFilter: "user_behavior",
         code: "car_to_buy",
-        opreat: ">=",
+        operator: ">=",
         value: "78",
         timerFrame: {
           type: "<",
@@ -174,9 +188,9 @@ export class UserComponent implements OnInit {
     ],
     [
       {
-        auditer: "user_braver",
+        audienceFilter: "user_behavior",
         code: "seek_to",
-        opreat: ">=",
+        operator: "=",
         value: "78",
         timerFrame: {
           type: "in",
@@ -205,12 +219,37 @@ export class UserComponent implements OnInit {
 
   onSelectChange(data, arr) {
     console.log("onSelectChange", data, arr)
-    if (data.fieldName == "auditer") {
-      // auditer
-      data.fieldList.find(item => item.fieldName == "code").optionsList = data.optionsList.find(item => item.id == data.fieldValue).permiss;
+    if (data.fieldName == "audienceFilter") {
+      // audienceFilter
+      let permiss = data.optionsList.find(item => item.id == data.fieldValue).permiss;
+      let save = new SaveFilter(data.fieldValue, null, null, null, {type: null})
+      data.fieldList = this.addFieldList(permiss, save);
     } else if (data.fieldName == "code") {
       // code
-      arr.find(item => item.fieldName == "opreat").optionsList = data.optionsList.find(item => item.id == data.fieldValue).opreatList;
+      arr.find(item => item.fieldName == "operator").optionsList = data.optionsList.find(item => item.id == data.fieldValue).opreatList;
+    } else if (data.fieldName == "timerFrameType") {
+      // 日期
+      let index = arr.findIndex(item => item.fieldName == "timerFrameValue");
+      if (this.confirmDate.includes(data.fieldValue)) {
+        // 固定日期
+        if (index !== -1) {
+          arr.splice(index, 1);
+          console.log("arr", arr)
+        }
+        data.fieldValueType = "confirmDate";
+      } else if (this.rangedate.includes(data.fieldValue)) {
+        // 区间日期
+        if (index === -1) {
+          arr.push(new FilterItem("timerFrameValue", [], "dateRange", "dateRange", []));
+        } else {
+          arr[index].fieldType = "dateRange";
+        }
+      } else {
+        // 普通日期
+        if (index === -1) {
+          arr.push(new FilterItem("timerFrameValue", "", "date", "date", []));
+        }
+      }
     }
   }
 
@@ -237,7 +276,6 @@ export class UserComponent implements OnInit {
       filterItem.push(this.addAndFilter());
       this.filterCondtionList.push(filterItem);
     }
-
   }
 
   addOrFilter() {
@@ -245,35 +283,31 @@ export class UserComponent implements OnInit {
   }
 
   addAndFilter(data?) {
-    data = data || {
-      auditer: "user_braver",
-      code: null,
-      opreat: null,
-      value: "",
-      timerFrame: {
-        type: null,
-        startDate: "",
-        endDate: ""
-      }
-    };
-    let filterItem;
+    data = data || new SaveFilter("user_behavior", null, null, null, {type: null});
+    let permiss = this.filterData.find(item => item.id == data.audienceFilter).permiss;
+
+    // audienceFilter
+    let filterItem = new FilterItem("audienceFilter", data.audienceFilter, "select", "", this.filterData);
+    filterItem.fieldList = this.addFieldList(permiss, data);
+    return filterItem;
+  }
+
+  addFieldList(permiss, data) {
     let fieldList = [];
-    let permiss = this.filterData.find(item => item.id == data.auditer).permiss;
-    // auditer
-    filterItem = new FilterItem("auditer", data.auditer, "select", "", this.filterData);
-
     // code
-    let codeItem = permiss.find(item => item.id == data.code);
-    let valueType = codeItem ? codeItem.valueType : "number";
-    fieldList.push(new FilterItem("code", data.code, "select", valueType, permiss));
+    let codeItem = permiss.find(item => item.id == data.code) || permiss[0];
+    if (data.audienceFilter == "segment") {
+      fieldList.push(new FilterItem("code", data.code, "select", codeItem.valueType, permiss, true));
+    } else {
+      fieldList.push(new FilterItem("code", data.code, "select", codeItem.valueType, permiss));
+    }
 
-    // opreat
-    let opreat = codeItem ? codeItem.opreat : [];
-    fieldList.push(new FilterItem("opreat", data.opreat, "select", "", opreat));
+    // operator
+    fieldList.push(new FilterItem("operator", data.operator, "select", "", codeItem.opreatList));
 
     // value
     let fieldValueType = "input";
-    switch (valueType) {
+    switch (codeItem.valueType) {
       case "input":
         fieldValueType = "input";
         break;
@@ -284,10 +318,14 @@ export class UserComponent implements OnInit {
         fieldValueType = "select";
         break;
     }
-    fieldList.push(new FilterItem("value", data.value, fieldValueType, "", []))
+    let valueOptionsList = [];
+    if (data.audienceFilter == "segment") {
+      valueOptionsList = this.roasterList;
+    }
+    fieldList.push(new FilterItem("value", data.value, fieldValueType, "", valueOptionsList))
 
     // timerFrame
-    if (true) {
+    if (codeItem.extra) {
       const { type, startDate, endDate } = data.timerFrame;
       if (this.confirmDate.includes(type)) {
         // 固定日期
@@ -302,50 +340,35 @@ export class UserComponent implements OnInit {
         fieldList.push(new FilterItem("timerFrameValue", startDate, "date", "date", []));
       }
     }
-
-    // for (let key in data) {
-    //   let index = this.filterData.findIndex(item => item.id == data[key]);
-    //   if (key == "auditer") {
-    //     // 一级
-    //     filterItem = new FilterItem(key, data[key], "select", "", this.getOptionsList(data[key], []));
-    //   } else if (key == "code") { 
-    //     // 二级
-    //     fieldList.push(new FilterItem(key, data[key], "select", "", this.getOptionsList(data[key], [data.auditer])));
-    //   } else if (key == "timerFrame") {
-    //     // 日期处理
-    //     if (this.confirmDate.includes(data[key]?.type)) {
-    //       // 固定日期
-    //       fieldList.push(new FilterItem("timerFrameType", data[key], "select", "confirmDate", this.dateFilterList));
-    //     } else if (this.rangedate.includes(data[key]?.type)) {
-    //       // 区间日期
-    //       fieldList.push(new FilterItem("timerFrameType", data[key], "select", "dateRange", this.dateFilterList));
-    //       fieldList.push(new FilterItem("timerFrameValue", [data[key].startDate, data[key].endDate], "dateRange", "dateRange", []));
-    //     } else {
-    //       fieldList.push(new FilterItem("timerFrameType", data[key], "select", "date", this.dateFilterList));
-    //       fieldList.push(new FilterItem("timerFrameValue", data[key].startDate, "date", "date", []));
-    //     }
-    //   } else {
-    //     if (index !== -1) {
-    //       // 一级
-    //     } else {
-    //       // 二级
-    //       fieldList.push(new FilterItem(key, data[key], "select", "", []));
-    //     }
-    //   }
-    // }
-    filterItem.fieldList = fieldList;
-    return filterItem;
+    return fieldList;
   }
 
+  roasterList = [
+    {id: "1", name: "名单一"},
+    {id: "2", name: "名单二"},
+    {id: "3", name: "名单三"}
+  ]
 
-  getOptionsList(value, arr) {
-    let result: Array<any> = this.filterData;
-    for (let i = 0; i < arr.length; i++) {
-      let fieldItem = result.find(item => item.id == value);
-      if (fieldItem) {
-        result = fieldItem.permiss;
-      }
-    }
-    return result;
+  createBasicMessage() {
+    //this.isVisibleMiddle = true;
+    this.modalService.confirm({
+      nzTitle: 'Are you sure delete this task?',
+      nzContent: '<b style="color: red;">Some descriptions</b>',
+      nzOkText: 'Yes',
+      nzOkType: 'danger',
+      nzWrapClassName: "vertical-center-modal",
+      nzOnOk: () => console.log('OK'),
+      nzCancelText: 'No',
+      nzOnCancel: () => console.log('Cancel')
+    });
+  }
+
+  handleOkMiddle(): void {
+    console.log('click ok');
+    this.isVisibleMiddle = false;
+  }
+
+  handleCancelMiddle(): void {
+    this.isVisibleMiddle = false;
   }
 }

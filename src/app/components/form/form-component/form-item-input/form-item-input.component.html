@@ -1,0 +1,10 @@
+<div class="form-item-input" [formGroup]="form">
+  <nz-form-item>
+    <nz-form-label [nzFor]="field.fieldName">{{ field.fieldLabel }}</nz-form-label>
+    <nz-form-control nzErrorTip="Please input your Password!">
+      <nz-input-group>
+        <input [formControlName]="field.fieldName" nz-input type="text" [placeholder]="field.fieldPlacehold" />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+</div>

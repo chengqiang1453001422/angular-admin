@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-selectAccount',
@@ -6,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./selectAccount.component.css']
 })
 export class SelectAccountComponent implements OnInit {
+
+  myGroup = new FormGroup({
+    name: new FormControl()
+  })
 
   constructor() { }
 

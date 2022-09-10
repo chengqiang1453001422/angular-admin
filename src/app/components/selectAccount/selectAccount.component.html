@@ -1,3 +1,7 @@
-<p>
-  selectAccount works!
-</p>
+<div>我是个组件</div>
+<div [formGroup]="myGroup">
+  <input formControlName="name" />
+</div>
+<div>
+  <ng-content></ng-content>
+</div>

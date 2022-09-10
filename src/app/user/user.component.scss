@@ -24,3 +24,15 @@
     margin-top: 12px;
   }
 }
+::ng-deep{
+  .vertical-center-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .ant-modal {
+      top: 0;
+      padding: 0;
+      transform-origin:center!important;
+    }
+  }
+}

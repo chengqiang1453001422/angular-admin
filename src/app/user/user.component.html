@@ -10,7 +10,7 @@
           </nz-select>
           <div class="field-item">
             <ng-container *ngFor="let fieldItem of subItem.fieldList">
-              <div class="field">
+              <div class="field" [hidden]="fieldItem.fieldHide">
                 <ng-template [ngIf]="fieldItem.fieldType == 'select'">
                   <nz-select [(ngModel)]="fieldItem.fieldValue" nzPlaceHolder="请选择" (ngModelChange)="onSelectChange(fieldItem, subItem.fieldList)" style="width: 200px">
                     <ng-container *ngFor="let foptionItem of fieldItem.optionsList">
@@ -54,3 +54,12 @@
     </div>
   </ng-container>
 </div>
+<button nz-button [nzType]="'default'" (click)="createBasicMessage()">保存</button>
+
+<nz-modal nzWrapClassName="vertical-center-modal" [(nzVisible)]="isVisibleMiddle" nzTitle="Vertically centered modal dialog" (nzOnCancel)="handleCancelMiddle()" (nzOnOk)="handleOkMiddle()">
+  <p>some contents...</p>
+  <p>some contents...</p>
+  <p>some contents...</p>
+</nz-modal>
+<!-- <ng-template #indicatorTemplate><i nz-icon type="loading" style="font-size: 24px"></i> </ng-template>
+<nz-spin [nzIndicator]="indicatorTemplate"> </nz-spin> -->
