@@ -20,7 +20,7 @@
     "@angular/platform-browser-dynamic": "~7.1.0",
     "@angular/router": "~7.1.0",
     "core-js": "^2.5.4",
-    "echarts": "^4.9.0",
+    "echarts": "^5.3.3",
     "ng-zorro-antd": "^7.5.1",
     "ngx-echarts": "^5.2.2",
     "ngx-quill": "^7.3.12",
